@@ -50,6 +50,7 @@ func build(args []string) {
 	buildSize := buildCmd.String("size", "1024M", "Size for output image, if supported and fixed size")
 	buildPull := buildCmd.Bool("pull", false, "Always pull images")
 	buildDocker := buildCmd.Bool("docker", false, "Check for images in docker before linuxkit cache")
+	buildPrefix := buildCmd.String("prefix", "", "Add a prefix to the root filesystem of the image")
 	buildDisableTrust := buildCmd.Bool("disable-content-trust", false, "Skip image trust verification specified in trust section of config (default false)")
 	buildDecompressKernel := buildCmd.Bool("decompress-kernel", false, "Decompress the Linux kernel (default false)")
 	buildCacheDir := buildCmd.String("cache", defaultLinuxkitCache(), "Directory for caching and finding cached image")
@@ -211,7 +212,7 @@ func build(args []string) {
 	if moby.Streamable(buildFormats[0]) {
 		tp = buildFormats[0]
 	}
-	err = moby.Build(m, w, *buildPull, tp, *buildDecompressKernel, cacheDir, *buildDocker)
+	err = moby.Build(m, w, *buildPull, *buildPrefix, tp, *buildDecompressKernel, cacheDir, *buildDocker)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}

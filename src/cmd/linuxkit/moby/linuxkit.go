@@ -66,7 +66,7 @@ func ensureLinuxkitImage(name, cache string) error {
 		return err
 	}
 	defer os.Remove(tf.Name())
-	if err := Build(m, tf, false, "", false, cache, true); err != nil {
+	if err := Build(m, tf, false, "", "", false, cache, true); err != nil {
 		return err
 	}
 	if err := tf.Close(); err != nil {
